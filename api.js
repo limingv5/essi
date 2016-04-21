@@ -6,7 +6,7 @@ var merge      = require("merge");
 var mkdirp     = require("mkdirp");
 var J          = require("juicer");
 //var livereload = require("livereload");
-var ipLib      = require("ip");
+//var ipLib      = require("ip");
 var Stack      = require("plug-trace").stack;
 
 var Juicer     = require("./lib/juicer");
@@ -14,7 +14,7 @@ var VM         = require("./lib/vm");
 var Remote     = require("./lib/remote");
 var AssetsTool = require("./lib/assetsTool");
 var Helper     = require("./lib/helper");
-var genCer     = require(pathLib.join(__dirname, "/https/gen-cer.js"));
+//var genCer     = require(pathLib.join(__dirname, "/https/gen-cer.js"));
 
 // var liveReloadMap = {
 //   http: null,
