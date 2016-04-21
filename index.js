@@ -92,7 +92,7 @@ exports = module.exports = function (param, dir) {
 exports.name = pkg.name;
 exports.config = require("./lib/param");
 exports.gulp = function (param, dir) {
-  param.livereload = false;
+  //param.livereload = false;
 
   var through = require("through2");
   var Helper = require("./lib/helper");

@@ -5,7 +5,7 @@ var util       = require("util");
 var merge      = require("merge");
 var mkdirp     = require("mkdirp");
 var J          = require("juicer");
-var livereload = require("livereload");
+//var livereload = require("livereload");
 var ipLib      = require("ip");
 var Stack      = require("plug-trace").stack;
 
@@ -16,15 +16,15 @@ var AssetsTool = require("./lib/assetsTool");
 var Helper     = require("./lib/helper");
 var genCer     = require(pathLib.join(__dirname, "/https/gen-cer.js"));
 
-var liveReloadMap = {
-  http: null,
-  https: null
-};
-var liveReloadIP = ipLib.address();
-var liveReloadPort = {
-  http: 3480,
-  https: 3443
-};
+// var liveReloadMap = {
+//   http: null,
+//   https: null
+// };
+// var liveReloadIP = ipLib.address();
+// var liveReloadPort = {
+//   http: 3480,
+//   https: 3443
+// };
 
 function ESSI(param, confFile) {
   this.cacheDir = null;
@@ -86,27 +86,27 @@ function ESSI(param, confFile) {
     }.bind(this));
   }
 
-  if (this.param.livereload) {
-    if (liveReloadMap.http === null) {
-      liveReloadMap.http = livereload.createServer({
-        port: liveReloadPort.http
-      });
-      liveReloadMap.http.watch(this.param.rootdir);
-    }
-
-    if (liveReloadMap.https === null) {
-      genCer(liveReloadIP, function (e, key, cert) {
-        liveReloadMap.https = livereload.createServer({
-          port: liveReloadPort.https,
-          https: {
-            key: key,
-            cert: cert
-          }
-        });
-        liveReloadMap.https.watch(this.param.rootdir);
-      }.bind(this));
-    }
-  }
+  // if (this.param.livereload) {
+  //   if (liveReloadMap.http === null) {
+  //     liveReloadMap.http = livereload.createServer({
+  //       port: liveReloadPort.http
+  //     });
+  //     liveReloadMap.http.watch(this.param.rootdir);
+  //   }
+  //
+  //   if (liveReloadMap.https === null) {
+  //     genCer(liveReloadIP, function (e, key, cert) {
+  //       liveReloadMap.https = livereload.createServer({
+  //         port: liveReloadPort.https,
+  //         https: {
+  //           key: key,
+  //           cert: cert
+  //         }
+  //       });
+  //       liveReloadMap.https.watch(this.param.rootdir);
+  //     }.bind(this));
+  //   }
+  // }
 };
 
 ESSI.prototype = {
@@ -226,9 +226,9 @@ ESSI.prototype = {
         if (state && state.isFile()) {
           this.compile(realPath, null, function (err, content) {
             if (!err) {
-              if (this.param.livereload) {
-                content = Helper.addLiveReload(content, liveReloadIP, liveReloadPort[req.connection.encrypted ? "https" : "http"]);
-              }
+              // if (this.param.livereload) {
+              //   content = Helper.addLiveReload(content, liveReloadIP, liveReloadPort[req.connection.encrypted ? "https" : "http"]);
+              // }
               var buff = Helper.encode(content, this.param.charset);
 
               res.writeHead(200, {
