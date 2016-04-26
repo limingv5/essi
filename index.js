@@ -95,6 +95,7 @@ exports.gulp = function (param, dir) {
   //param.livereload = false;
 
   var through = require("through2");
+  var merge = require("merge");
   var Helper = require("./lib/helper");
   var confFile = init_config(dir);
 
@@ -106,6 +107,8 @@ exports.gulp = function (param, dir) {
 
   return through.obj(function (file, enc, cb) {
     var essiInst = new ESSI(param, confFile);
+
+    param = merge.recursive(true, essiInst.param, param);
 
     var self = this;
 
