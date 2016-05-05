@@ -213,7 +213,7 @@ ESSI.prototype = {
   },
   handle: function (req, res, next) {
     var matching = this.param.supportedFile;
-    if (matching.length && !new RegExp(matching.join('|')).test(req.url)) {
+    if (matching.length && !Helper.matchPath(req.url, matching)) {
       next();
     }
     else {
