@@ -49,30 +49,11 @@ exports = module.exports = function (param, dir) {
     trace(data);
   });
 
-  return function () {
-    var essiInst = new ESSI(param, confFile);
-
-    var req, res, next;
-    switch (arguments.length) {
-      case 1:
-        req = this.req;
-        res = this.res;
-        next = arguments[0];
-        break;
-      case 3:
-        req = arguments[0];
-        res = arguments[1];
-        next = arguments[2];
-        break;
-      default:
-        next = function () {
-          console.log("Unknown Web Container!");
-        };
-    }
-
+  return function (req, res, next) {
     try {
       if (req && res && next) {
-        if (/\.vm|\.htm/.test(req.url)) {
+        if (/\.vm$|\.htm$|\.html$/.test(req.url)) {
+          var essiInst = new ESSI(param, confFile);
           essiInst.handle(req, res, next);
         }
         else {
@@ -80,7 +61,7 @@ exports = module.exports = function (param, dir) {
         }
       }
       else {
-        next();
+        console.log("arguments error!");
       }
     }
     catch (e) {
@@ -92,8 +73,6 @@ exports = module.exports = function (param, dir) {
 exports.name = pkg.name;
 exports.config = require("./lib/param");
 exports.gulp = function (param, dir) {
-  //param.livereload = false;
-
   var through = require("through2");
   var merge = require("merge");
   var Helper = require("./lib/helper");
