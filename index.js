@@ -43,6 +43,7 @@ function init_config(dir) {
 
 exports = module.exports = function (param, dir) {
   var confFile = init_config(dir);
+  var urlLib = require("url");
 
   process.on(pkg.name, function (data) {
     console.log("\n=== Served by %s ===", trace.chalk.white(pkg.name));
@@ -52,7 +53,8 @@ exports = module.exports = function (param, dir) {
   return function (req, res, next) {
     try {
       if (req && res && next) {
-        if (/\.vm$|\.htm$|\.html$/.test(req.url)) {
+        var result = urlLib.parse(req.url);
+        if (/\.vm$|\.htm$|\.html$/.test(result.pathname)) {
           var essiInst = new ESSI(param, confFile);
           essiInst.handle(req, res, next);
         }
